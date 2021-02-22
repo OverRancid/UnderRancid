@@ -8,6 +8,20 @@ class Card_Jitsu(commands.Cog):
         self.client = client
 
     @commands.command()
+    async def jitsu_help(self, ctx):
+        embed=discord.Embed(title="Card Jitsu", description="Card Jitsu - Discord Edition ( based off the popular Club Penguin mini-game ) Bot Name - UnderRancid.py, created by OverRancid#0590")
+        embed.add_field(name="How To Play:", value=" The game works similar to Rock Papers Scissors except with Fire ( :fire: ), Ice ( :ice_cube: ), and Water ( :droplet: ).", inline=False)
+        embed.add_field(name="឵឵", value="Fire defeats Ice, Ice defeats Water, and Water defeats Fire. If both players play the same element, the card with the higher numerical value wins the round. Note that the numerical value only matters if both players play the same element .", inline=False)
+        embed.add_field(name="឵឵", value=" To challenge a user, use the command ~play @[mention user]. The user reacts to the bot's message with either a :white_check_mark: to accept or :negative_squared_cross_mark: to decline the challenge.", inline=False)
+        embed.add_field(name="឵឵", value="The bot DM's you your cards as a reaction message. React to the message accordingly to decide what card you wish to play. ", inline=False)
+        embed.add_field(name="឵឵", value=" If the bot does not respond after both users have played, the person who was challenged must re-react their card as the bot reads the  challenger's card first. (This does not in any way affect the outcome of the round).", inline=False)
+        embed.add_field(name="឵឵", value="When a round is won, the winnings are displayed as [user]'s winnings: [winning card element].", inline=False)
+        embed.add_field(name="឵឵", value=" Cards that have been played once are automatically removed from the players roster and the player is given a new card.", inline=False)
+        embed.add_field(name="឵឵", value=" In order to win, a player is required to either acquire 3 wins with the same element or one win each with all three elements.", inline=False)
+        embed.set_footer(text=f"credits : @VivviTheGreat#9532 ")
+        await ctx.send(embed=embed)
+
+    @commands.command()
     async def challenge(self , ctx , member : discord.Member ):
         channel = ctx.channel
         embed = discord.Embed(title = "Jitsu Match",
@@ -16,14 +30,14 @@ class Card_Jitsu(commands.Cog):
         message = await channel.send(embed = embed)
 
         await message.add_reaction('✅')
-        await message.add_reaction('❎')
+        await message.add_reaction('<:nohomo:775628707179397130>')
 
         def check(reaction, user):
-            return user == member and str(reaction.emoji) in ['✅','❎']
+            return user == member and str(reaction.emoji) in ['✅','<:nohomo:775628707179397130>']
 
 
         reaction, user = await self.client.wait_for('reaction_add', check=check)
-        if reaction.emoji == "❎":
+        if reaction.emoji == "<:nohomo:775628707179397130>":
             embed = discord.Embed(title= "Challenged declined" , color = 0xFF0000)
             await channel.send(embed = embed)
 

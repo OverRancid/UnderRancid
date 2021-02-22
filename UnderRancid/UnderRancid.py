@@ -3,13 +3,7 @@ import os
 import json
 from discord.ext import commands
 
-def get_prefix(client, message):
-    with open('prefixes.json','r') as f:
-        prefixes = json.load(f)
-
-        return prefixes[str(message.guild.id)]
-
-client = commands.Bot(command_prefix = get_prefix)
+client = commands.Bot(command_prefix = "~")
 
 @client.event
 async def on_ready():
@@ -17,35 +11,10 @@ async def on_ready():
 
     return
 
-
-@client.command()
-async def load(ctx, extension):
-    client.load_extension(f'cogs.{extension}')
-    await ctx.send(f'Loaded "{extension}"')
-    print(f'Loaded "{extension}"')
-
-    return
-
-@client.command()
-async def unload(ctx, extension):
-    client.unload_extension(f'cogs.{extension}')
-    await ctx.send(f'Unloaded "{extension}"')
-    print(f'Unoaded "{extension}"')
-
-    return
-
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
         print(f'Loaded {filename[:-3]}')
-
-@client.command()
-async def restart(ctx, extension):
-    client.unload_extention(f'cogs.{extension}')
-    client.load_extension(f'cogs.{extension}')
-    await ctx.send(f'restarted "{extension}"')
-
-    return
 
 @client.event
 async def on_guild_join(guild):
@@ -67,6 +36,7 @@ async def on_guild_remove(guild):
     with open('prefixes.json','w') as f:
         json.dump(prefixes, f, indent=4)
 
+@commands.has_permissions(administrator = True)
 @client.command()
 async def prefix(ctx , prefix):
     with open('prefixes.json','r') as f:
@@ -76,11 +46,6 @@ async def prefix(ctx , prefix):
 
     with open('prefixes.json','w') as f:
         json.dump(prefixes, f, indent=4)
-    await ctx.send("Changed server prefix to" + prefix)
-
-@client.command()
-async def spam(ctx ,amount=10, *, text):
-    for i in range(int(amount)):
-        await ctx.send(text)
+    await ctx.send("Changed server prefix to " + prefix)
 
 client.run('NzQxMjk2NjAzNzMzOTUwNDk0.Xy1gQg.9JJre7psWNstT0pv-H5lrYeZ_wA')
