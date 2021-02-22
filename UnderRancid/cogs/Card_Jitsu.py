@@ -30,14 +30,14 @@ class Card_Jitsu(commands.Cog):
         message = await channel.send(embed = embed)
 
         await message.add_reaction('✅')
-        await message.add_reaction('<:nohomo:775628707179397130>')
+        await message.add_reaction('❎')
 
         def check(reaction, user):
-            return user == member and str(reaction.emoji) in ['✅','<:nohomo:775628707179397130>']
+            return user == member and str(reaction.emoji) in ['✅','❎']
 
 
         reaction, user = await self.client.wait_for('reaction_add', check=check)
-        if reaction.emoji == "<:nohomo:775628707179397130>":
+        if reaction.emoji == "❎":
             embed = discord.Embed(title= "Challenged declined" , color = 0xFF0000)
             await channel.send(embed = embed)
 
